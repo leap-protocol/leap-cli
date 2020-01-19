@@ -1,0 +1,35 @@
+{
+  "name": "leap-cli",
+  "version": "1.0.0",
+  "description": "Command line ineterface for the L3aP protocol",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter nyan"
+  },
+  "bin": {
+    "leap": "./cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leap-protocol/leap-cli.git"
+  },
+  "keywords": [
+    "leap",
+    "l34p",
+    "protocol",
+    "cli"
+  ],
+  "author": "Hoani Bryson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leap-protocol/leap-cli/issues"
+  },
+  "homepage": "https://github.com/leap-protocol/leap-cli#readme",
+  "devDependencies": {
+    "mocha": "^7.0.0"
+  },
+  "dependencies": {
+    "js-yaml": "^3.13.1",
+    "toml": "^3.0.0"
+  }
+}
