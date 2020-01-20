@@ -21,17 +21,11 @@ exports.LoadConfig = class LoadConfig {
     }
     catch {
       this.is_valid = false;
-      console.log("invlaid file");
+      console.log(`File ${filepath} not loaded, are you sure it exists?`);
     }
 
     if (this.is_valid) {
-      this._attempt_parse(data);
-    }
-
-    if (this.is_valid) {
-      if (leap.verify(this._config) == false) {
-        this.is_valid = false;
-      }
+      this._attempt_parse(filepath, data);
     }
   }
 
@@ -43,7 +37,7 @@ exports.LoadConfig = class LoadConfig {
     return this._config;
   }
 
-  _attempt_parse(data) {
+  _attempt_parse(filepath, data) {
     try {
       this._config = JSON.parse(data);
     }
@@ -57,6 +51,7 @@ exports.LoadConfig = class LoadConfig {
         }
         catch {
           this.is_valid = false;
+          console.log(`File ${filepath} is not valid yaml, toml or json.`);
         }
       }
     }
