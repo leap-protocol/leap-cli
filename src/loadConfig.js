@@ -9,7 +9,7 @@
 const fs = require('fs');
 const toml = require('toml');
 const yaml = require('js-yaml');
-const verify = require('./verify');
+const leap = require('leap-protocol');
 
 exports.LoadConfig = class LoadConfig {
   constructor(filepath) {
@@ -23,14 +23,14 @@ exports.LoadConfig = class LoadConfig {
       this.is_valid = false;
       console.log("invlaid file");
     }
-    
+
     if (this.is_valid) {
       this._attempt_parse(data);
     }
 
     if (this.is_valid) {
-      if (verify.verify_quiet(filepath) == false) {
-        this.is_valid = false;        
+      if (leap.verify(this._config) == false) {
+        this.is_valid = false;
       }
     }
   }

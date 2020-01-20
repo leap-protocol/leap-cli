@@ -8,9 +8,9 @@
 //
 
 const loadConfig = require('./src/loadConfig');
-const fs = require('react-native-fs');
+const fs = require('fs');
 const cli_parse = require("./src/cliParse");
-const leap = require("./index");
+const leap = require("leap-protocol");
 const directory = require('path').dirname(__filename)
 
 

@@ -29,7 +29,9 @@
     "mocha": "^7.0.0"
   },
   "dependencies": {
+    "argparse": "^1.0.10",
     "js-yaml": "^3.13.1",
+    "leap-protocol": "^1.0.4",
     "toml": "^3.0.0"
   }
 }
