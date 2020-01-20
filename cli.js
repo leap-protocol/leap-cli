@@ -12,6 +12,7 @@ const fs = require('fs');
 const cli_parse = require("./src/cliParse");
 const leap = require("leap-protocol");
 const directory = require('path').dirname(__filename);
+const style =require('./src/style');
 
 const EXIT_SUCCESS = 0;
 const EXIT_FAILURE = 1;
@@ -46,13 +47,13 @@ function handle_generate(filename) {
 
   if (data == null) {
     console.log(
-      `Failed to write config file to ${filename}. `+
+      `Failed to write config file to ${style.Bright}${filename}${style.reset}. `+
       `Please specify a yaml, json or toml filename.`
     )
     return false;
   }
   else {
-    console.log(`Wrote config file to ${filename}`);
+    console.log(`Wrote config file to ${style.Bright}${filename}${style.Reset}`);
     fs.writeFileSync(filename, data);
   }
 
@@ -72,6 +73,13 @@ function handle_verify(filename) {
   }
 }
 
+function encoded_string(encoded) {
+  if (encoded[encoded.length-1] === '\n') {
+    encoded = encoded.slice(0, encoded.length-1);
+  }
+  return `${style.Bright}${encoded}${style.Reset}`
+}
+
 // Encode a packet
 function handle_encode(filename, category, address, payload) {
   const loader = load_config(filename);
@@ -86,7 +94,7 @@ function handle_encode(filename, category, address, payload) {
       if (encoded.length !== 0) {
         console.log(``+
           `Encoded Packet ( ${category}, ${address}, [${payload.toString()}]):\n`+
-          `${encoded}`
+          `   ` + encoded_string(encoded)
         );
         return true;
       }
@@ -111,12 +119,13 @@ function handle_decode(filename, encoded) {
             const u = c.unpack(p);
 
             console.log(
-              `Decoded Packet <${encoded}>:\n`+
-              `   category - ${p.category}`
+              `Decoded Packet ${encoded_string(encoded)}:\n` +
+              `   category - ${style.Bright}${p.category}${style.Reset}`
             );
             Object.keys(u).forEach(function(key) {
               console.log(
-                `   address "${key}" = ${u[key]}`
+                `   item ${style.TextCyan}${key}${style.Reset}` +
+                ` = ${style.Bright}${u[key]}${style.Reset}`
               );
             });
           }
@@ -128,8 +137,8 @@ function handle_decode(filename, encoded) {
       }
       catch {
         console.log(
-          `   Decode of <${encoded}> failed.\n`+
-          `   please check if you are using the correct config file.`
+          `Decode of ${encoded_string(encoded)} failed.\n`+
+          `   Please ensure you are using the correct config file.`
         );
       }
     }
@@ -176,9 +185,11 @@ if ("decode" in settings) {
 }
 
 if (success) {
+  console.log(`${style.TextGreen}SUCCESS${style.Reset}`);
   process.exit(EXIT_SUCCESS);
 }
 else {
+  console.log(`${style.TextRed}FAILED${style.Reset}`);
   process.exit(EXIT_FAILURE);
 }
 
