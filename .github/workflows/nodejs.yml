@@ -1,4 +1,4 @@
-name: Leap-CLI Testing
+name: L3aP-CLI Testing
 
 on: [push]
 
